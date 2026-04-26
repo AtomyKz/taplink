@@ -1,6 +1,5 @@
 // ===== КОНФИГУРАЦИЯ =====
-// ⚠️ ЗАМЕНИТЕ ЭТОТ URL на URL вашего Google Apps Script после публикации
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/ВАШ_ID/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWA9Ci6gG__jGIHCi6rKIjf3CjV-gIVV2vNSCRExGh1WvzT1EmaNaLe5Pq1zc8TEmQUA/exec';
 
 const CURRENCIES = {
     KZT: { id: 'KZT', symbol: '₸', min: 10000, max: 100000, step: 1000, defaultOrder: 32000 },
