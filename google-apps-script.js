@@ -65,7 +65,7 @@ function setupSheetHeaders(sheet) {
   sheet.setFrozenRows(1);
 
   // Границы заголовка
-  headerRange.setBorder(true, true, true, true, true, true, COLORS.borderColor, SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+  headerRange.setBorder(true, true, true, true, true, true, COLORS.borderColor, SpreadsheetApp.BorderStyle.SOLID);
 }
 
 // ===== СТИЛИЗАЦИЯ СТРОКИ ДАННЫХ =====
@@ -146,7 +146,7 @@ function doPost(e) {
     var rowIndex = nextRow - 1; // для зебры (1-based, заголовок=1)
 
     var isBusiness = (data.purpose === 'business');
-    var purposeLabel = isBusiness ? '💼 Бизнес-партнер' : '🛒 Покупатель';
+    var purposeLabel = isBusiness ? 'Бизнес-партнер' : 'Покупатель';
 
     // Данные строки: №, Дата, ФИО, ДР, Email, Телефон, Адрес, Цель, ИИН
     var rowData = [
