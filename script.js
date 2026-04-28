@@ -1,5 +1,5 @@
 // ===== КОНФИГУРАЦИЯ =====
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWA9Ci6gG__jGIHCi6rKIjf3CjV-gIVV2vNSCRExGh1WvzT1EmaNaLe5Pq1zc8TEmQUA/exec';
+const GOOGLE_SCRIPT_URL = SITE_CONFIG.googleScriptUrl;
 
 const CURRENCIES = {
     KZT: { id: 'KZT', symbol: '₸', min: 10000, max: 100000, step: 1000, defaultOrder: 32000 },
@@ -34,6 +34,7 @@ const purposeCards = document.querySelectorAll('.purpose-card');
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener('DOMContentLoaded', () => {
     yearSpan.textContent = new Date().getFullYear();
+    applySiteConfig();
     initPurposeCards();
     initCurrencySwitcher();
     initSliders();
@@ -41,6 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackButton();
     updateCalculator();
 });
+
+// ===== ПЕРСОНАЛИЗАЦИЯ =====
+function applySiteConfig() {
+    document.title = 'Atomy - Регистрация | ' + SITE_CONFIG.name;
+    document.getElementById('sponsorName').textContent = SITE_CONFIG.name;
+    document.getElementById('sponsorRank').textContent = SITE_CONFIG.rank;
+    document.getElementById('footerName').textContent = SITE_CONFIG.nameEn;
+
+    if (SITE_CONFIG.whatsapp) {
+        document.getElementById('whatsappLink').href = 'https://wa.me/' + SITE_CONFIG.whatsapp;
+    } else {
+        document.getElementById('whatsappWrap').style.display = 'none';
+    }
+}
 
 // ===== КАРТОЧКИ ЦЕЛИ =====
 function initPurposeCards() {

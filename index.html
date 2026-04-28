@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atomy - Регистрация | Елена Коханова</title>
+    <title>Atomy - Регистрация</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,8 +67,8 @@
                             </div>
                         </div>
                         <div class="sponsor-info">
-                            <p class="sponsor-name">Елена Коханова</p>
-                            <p class="sponsor-rank">Бриллиантовый Мастер</p>
+                            <p class="sponsor-name" id="sponsorName"></p>
+                            <p class="sponsor-rank" id="sponsorRank"></p>
                         </div>
                     </div>
                     <div class="sponsor-message">
@@ -98,7 +98,7 @@
                 <div class="form-card">
                     <div class="warning-box">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                        <p><b>Внимание!</b> Если Вы уже зарегистрированы в Atomy и у Вас есть активный аккаунт, эту анкету заполнять не нужно. <a href="https://wa.me/77089333195" target="_blank" style="color: #25D366; font-weight: 600; text-decoration: none; border-bottom: 1px solid #25D366;">Напишите мне на WhatsApp</a>.</p>
+                        <p><b>Внимание!</b> Если Вы уже зарегистрированы в Atomy и у Вас есть активный аккаунт, эту анкету заполнять не нужно.<span id="whatsappWrap"> <a href="" id="whatsappLink" target="_blank" style="color: #25D366; font-weight: 600; text-decoration: none; border-bottom: 1px solid #25D366;">Напишите мне на WhatsApp</a>.</span></p>
                     </div>
 
                     <!-- Раздел 1: Личные данные -->
@@ -309,11 +309,12 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
                     <div></div>
                 </div>
-                <p class="footer-text">© <span id="year"></span> Team Atomy • Elena Kokhanova</p>
+                <p class="footer-text">© <span id="year"></span> Team Atomy • <span id="footerName"></span></p>
             </footer>
         </main>
     </div>
 
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
