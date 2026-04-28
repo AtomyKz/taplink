@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initPurposeCards() {
     purposeCards.forEach(card => {
         const radio = card.querySelector('input[type="radio"]');
-        
+
         card.addEventListener('click', (e) => {
             if (e.target.tagName !== 'INPUT') {
                 radio.checked = true;
@@ -59,10 +59,23 @@ function initPurposeCards() {
 }
 
 function updatePurposeSelection() {
+    const iinSection = document.getElementById('iinSection');
+    const iinInput = document.getElementById('iinInput');
+
     purposeCards.forEach(card => {
         const radio = card.querySelector('input[type="radio"]');
         if (radio.checked) {
             card.classList.add('selected');
+
+            // Показываем/скрываем поле ИИН
+            if (radio.value === 'business') {
+                iinSection.style.display = 'block';
+                iinInput.required = true;
+            } else {
+                iinSection.style.display = 'none';
+                iinInput.required = false;
+                iinInput.value = '';
+            }
         } else {
             card.classList.remove('selected');
         }
@@ -115,8 +128,16 @@ function updateCalculator() {
     orderMin.textContent = `${curr.min.toLocaleString('ru-RU')} ${curr.symbol}`;
     orderMax.textContent = `${curr.max.toLocaleString('ru-RU')} ${curr.symbol}`;
 
-    const daily = Math.floor(partners * averageOrder * 0.015);
-    const monthly = daily * 26;
+    // Формула Atomy: с каждого партнера, который покупает на X в месяц, ты получаешь 7% бонус
+    const bonusPerPartner = Math.floor(averageOrder * 0.07);
+
+    // Доход в день: если структура активная, каждый день кто-то покупает
+    // Примерно 1/30 от всех партнеров делают покупку каждый день
+    const activePartnersPerDay = Math.max(1, Math.floor(partners / 30));
+    const daily = activePartnersPerDay * bonusPerPartner;
+
+    // Доход в месяц: все партнеры делают покупки в течение месяца
+    const monthly = partners * bonusPerPartner;
 
     dailyIncome.textContent = `${daily.toLocaleString('ru-RU')} ${curr.symbol}`;
     monthlyIncome.textContent = `≈ ${monthly.toLocaleString('ru-RU')} ${curr.symbol}`;
@@ -126,7 +147,7 @@ function updateCalculator() {
 function initForm() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData(form);
         const data = {
             fullName: formData.get('fullName'),
@@ -135,6 +156,7 @@ function initForm() {
             phone: formData.get('phone'),
             address: formData.get('address'),
             purpose: formData.get('purpose'),
+            iin: formData.get('iin') || '',
             timestamp: new Date().toLocaleString('ru-RU')
         };
 
@@ -142,6 +164,14 @@ function initForm() {
         if (!data.purpose) {
             alert('Пожалуйста, выберите цель в Atomy');
             return;
+        }
+
+        // Валидация ИИН для бизнес-партнеров
+        if (data.purpose === 'business' && data.iin) {
+            if (!/^\d{12}$/.test(data.iin)) {
+                alert('ИИН должен содержать ровно 12 цифр');
+                return;
+            }
         }
 
         setLoading(true);
@@ -233,9 +263,25 @@ document.querySelector('input[name="phone"]').addEventListener('input', function
 document.querySelector('input[name="birthDate"]').addEventListener('blur', function(e) {
     const value = e.target.value;
     if (!value) return;
-    
+
     const date = new Date(value);
     if (isNaN(date.getTime())) {
         e.target.value = '';
+    }
+});
+
+// ===== МАСКА ИИН =====
+document.addEventListener('DOMContentLoaded', () => {
+    const iinInput = document.getElementById('iinInput');
+    if (iinInput) {
+        iinInput.addEventListener('input', function(e) {
+            // Оставляем только цифры
+            let value = e.target.value.replace(/\D/g, '');
+            // Ограничиваем 12 символами
+            if (value.length > 12) {
+                value = value.substring(0, 12);
+            }
+            e.target.value = value;
+        });
     }
 });
